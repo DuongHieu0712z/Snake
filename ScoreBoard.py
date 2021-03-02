@@ -13,8 +13,8 @@ class ScoreBoard:
         self.font.bold = True
         self.text = pygame.Surface((0, 0))
 
-    def setText(self, text: str) -> None:
-        self.text = self.font.render(text, True, WHITE)
+    def setScore(self, score: int) -> None:
+        self.text = self.font.render(f'Score:{score}', True, WHITE)
 
     def draw(self, surface: pygame.Surface) -> None:
         self.surface.fill(BLACK)
