@@ -35,13 +35,12 @@ class Snake:
             if self.direction != LEFT:
                 self.direction = RIGHT
 
-    def eatFood(self, food, score: int) -> None:
-        if self.head.rect == food.rect:
-            self.body.append(self.tail)
-            pygame.mixer.Sound('sound.wav').play()
-            food.randomizePosition(self)
-            return score + 1
-        return score
+    def isCollisionFood(self, food) -> bool:
+        return self.head.rect == food.rect
+
+    def eatFood(self) -> None:
+        self.body.append(self.tail)
+        pygame.mixer.Sound('sound.wav').play()
     
     def isCollisionBody(self) -> bool:
         return self.head.rect in map(lambda cell: cell.rect, self.body[1:])
