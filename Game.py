@@ -18,9 +18,9 @@ class Game:
         icon = pygame.image.load('images.png')
         pygame.display.set_icon(icon)
 
-        self.score_board = ScoreBoard((0, 0), 400, 30)
-        self.board = Board((0, 30), ROW, COL)
-        self.snake = Snake((120, 120), RED)
+        self.score_board = ScoreBoard()
+        self.board = Board()
+        self.snake = Snake(SNAKE_POS, RED)
         self.food = Food(GREEN)
         self.food.randomizePosition(self.snake)
 
@@ -36,11 +36,17 @@ class Game:
 
     def update(self) -> None:
         self.snake.move(self.board)
+
+        if self.snake.isCollisionFood(self.food):
+            self.snake.eatFood()
+            self.food.randomizePosition(self.snake)
+            self.score += 1
+
         if self.snake.isCollisionBody():
             self.is_running = False
-        self.score = self.snake.eatFood(self.food, self.score)
-        self.text_score = f'Score:{self.score}'
-        self.score_board.setText(self.text_score)
+
+        text = f'Score:{self.score}'
+        self.score_board.setText(text)
 
     def render(self) -> None:
         self.screen.fill(BLACK)
