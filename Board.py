@@ -3,15 +3,14 @@ from header import *
 
 
 class Board:
-    def __init__(self, pos: tuple, row: int, col: int, size: int = CELL_SIZE) -> None:
-        self.row = row
-        self.col = col
-        self.size = size
-        self.rect = pygame.Rect(0, 0, size, size)
-
-        self.pos = pygame.Vector2(pos)
-        self.width = col * size
-        self.height = row * size
+    def __init__(self) -> None:
+        self.pos = pygame.Vector2(BOARD_POS)
+        self.width = BOARD_WIDTH
+        self.height = BOARD_HEIGHT
+        self.row = ROW
+        self.col = COL
+        self.size = CELL_SIZE
+        self.rect = pygame.Rect(0, 0, self.size, self.size)
         self.surface = pygame.Surface((self.width, self.height))
 
     def draw(self, surface: pygame.Surface, snake, food) -> None:
@@ -24,6 +23,8 @@ class Board:
                 else:
                     color = (1, 105, 137)
                 pygame.draw.rect(self.surface, color, self.rect)
+
         snake.draw(self.surface)
         food.draw(self.surface)
+
         surface.blit(self.surface, self.pos)
