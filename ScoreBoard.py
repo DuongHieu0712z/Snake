@@ -9,8 +9,8 @@ class ScoreBoard:
         self.height = SCORE_BOARD_HEIGHT
         self.surface = pygame.Surface((self.width, self.height))
 
-        self.font = pygame.font.SysFont('consolas', 16)
-        self.font.bold = True
+        self.font = pygame.font.SysFont('Consolas', 16)
+        # self.font.bold = True
         self.text = pygame.Surface((0, 0))
 
     def setScore(self, score: int) -> None:
