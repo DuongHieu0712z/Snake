@@ -20,18 +20,17 @@ class Snake:
         self.tail = self.body[-1]
         self.size = size
 
-    def handleInput(self) -> None:
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP] or keys[pygame.K_w]:
+    def handleInput(self, key) -> None:
+        if key == pygame.K_UP or key == pygame.K_w:
             if self.direction != DOWN:
                 self.direction = UP
-        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        elif key == pygame.K_DOWN or key == pygame.K_s:
             if self.direction != UP:
                 self.direction = DOWN
-        elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
+        elif key == pygame.K_LEFT or key == pygame.K_a:
             if self.direction != RIGHT:
                 self.direction = LEFT
-        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        elif key == pygame.K_RIGHT or key == pygame.K_d:
             if self.direction != LEFT:
                 self.direction = RIGHT
 
