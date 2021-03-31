@@ -14,8 +14,8 @@ class Game:
         self.screen = pygame.display.set_mode(SCREEN)
         pygame.display.set_caption('Snake')
 
-        icon = pygame.image.load('images.png')
-        pygame.display.set_icon(icon)
+        # icon = pygame.image.load('images.png')
+        # pygame.display.set_icon(icon)
 
         self.score_board = ScoreBoard()
         self.board = Board()
@@ -26,12 +26,17 @@ class Game:
         self.score = 0
         self.is_running = True
 
+        self.time = Time()
+        self.before_time = 0
+        self.current_time = 0
+        self.lag = 0
+
     def handleEvent(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.is_running = False
             elif event.type == pygame.KEYDOWN:
-                self.snake.handleInput()
+                self.snake.handleInput(event.key)
 
     def update(self) -> None:
         self.snake.move(self.board)
@@ -52,24 +57,20 @@ class Game:
         self.board.draw(self.screen, self.snake, self.food)
         pygame.display.update()
 
+    def getTime(self) -> None:
+        self.time.start()
+        self.current_time = self.time.getTicks()
+        time_past = self.current_time - self.before_time
+        self.before_time = self.current_time
+        self.lag += time_past
+
     def run(self) -> None:
-        time = Time()
         ms_per_frame = 1000 / FPS
-        time.start()
-        before_time = time.getTicks()
-        lag = 0
-
         while self.is_running:
-            time.start()
-            current_time = time.getTicks()
-            time_past = current_time - before_time
-            before_time = current_time
-            lag += time_past
-
+            self.getTime()
             self.handleEvent()
-            while lag >= ms_per_frame:
+            while self.lag >= ms_per_frame:
                 self.update()
-                lag -= ms_per_frame
+                self.lag -= ms_per_frame
             self.render()
-
         pygame.quit()
