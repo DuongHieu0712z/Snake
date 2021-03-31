@@ -64,5 +64,6 @@ class Snake:
         self.handleCollisionBorder(board)
 
     def draw(self, surface: pygame.Surface) -> None:
-        for cell in self.body:
+        self.head.draw(surface, True, self.direction)
+        for cell in self.body[1:]:
             cell.draw(surface)
